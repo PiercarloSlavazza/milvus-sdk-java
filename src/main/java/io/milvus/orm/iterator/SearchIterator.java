@@ -140,8 +140,8 @@ public class SearchIterator {
 
     private void checkRmRangeSearchParameters() {
         if (params.containsKey(RADIUS) && params.containsKey(RANGE_FILTER)) {
-            float radius = (float) params.get(RADIUS);
-            float rangeFilter = (float) params.get(RANGE_FILTER);
+            double radius = (double) params.get(RADIUS);
+            double rangeFilter = (double) params.get(RANGE_FILTER);
             if (metricsPositiveRelated(metricType) && radius <= rangeFilter) {
                 String msg = String.format("for metrics:%s, radius must be larger than range_filter, please adjust your parameter", metricType);
                 ExceptionUtils.throwUnExpectedException(msg);
