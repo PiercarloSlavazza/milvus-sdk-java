@@ -56,9 +56,17 @@
     </scm>
 
     <distributionManagement>
+        <repository>
+            <id>explurimis.repository.maven</id>
+            <url>
+                scp://${explurimis_repositories.user}@${explurimis_repositories.host}${explurimis_repositories.base_path}/maven
+            </url>
+        </repository>
         <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>explurimis.repository.maven.snapshots</id>
+            <url>
+                scp://${explurimis_repositories.user}@${explurimis_repositories.host}${explurimis_repositories.base_path}/maven_snapshots
+            </url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -110,6 +118,9 @@
         <minio-java-sdk.veresion>8.5.7</minio-java-sdk.veresion>
         <azure-java-blob-sdk.version>12.25.3</azure-java-blob-sdk.version>
         <azure-java-identity-sdk.version>1.10.1</azure-java-identity-sdk.version>
+        <explurimis_repositories.base_path>/var/explurimis_repositories</explurimis_repositories.base_path>
+        <explurimis_repositories.host>64.225.83.199</explurimis_repositories.host>
+        <explurimis_repositories.user>explurimis</explurimis_repositories.user>
     </properties>
 
     <dependencyManagement>
@@ -452,19 +463,13 @@
                 <artifactId>os-maven-plugin</artifactId>
                 <version>${os.maven.plugin.version}</version>
             </extension>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>3.5.2</version>
+            </extension>
         </extensions>
         <plugins>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.8</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
